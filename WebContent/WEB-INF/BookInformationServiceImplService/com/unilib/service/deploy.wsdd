@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BookInformationServiceImplService WSDL service -->
+
+  <service name="BookInformationServiceImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.unilib.com"/>
+      <parameter name="wsdlServiceElement" value="BookInformationServiceImplService"/>
+      <parameter name="schemaQualified" value="http://dao.unilib.com,http://service.unilib.com"/>
+      <parameter name="wsdlServicePort" value="BookInformationServiceImpl"/>
+      <parameter name="className" value="com.unilib.service.BookInformationServiceImpl"/>
+      <parameter name="wsdlPortType" value="BookInformationServiceImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://service.unilib.com" xmlns:retNS="http://service.unilib.com" xmlns:rtns="http://dao.unilib.com" name="getBookFromMarket" qname="operNS:getBookFromMarket" returnQName="retNS:getBookFromMarketReturn" returnType="rtns:Book" soapAction="">
+        <parameter xmlns:pns="http://service.unilib.com" xmlns:tns="http://dao.unilib.com" qname="pns:book" type="tns:Book"/>
+      </operation>
+      <operation xmlns:operNS="http://service.unilib.com" xmlns:retNS="http://service.unilib.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="isQualityWithinRange" qname="operNS:isQualityWithinRange" returnQName="retNS:isQualityWithinRangeReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://service.unilib.com" xmlns:tns="http://dao.unilib.com" qname="pns:book" type="tns:Book"/>
+      </operation>
+      <parameter name="allowedMethods" value="getBookFromMarket isQualityWithinRange"/>
+
+      <typeMapping xmlns:ns="http://dao.unilib.com" qname="ns:Book" type="java:com.unilib.dao.Book" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
